@@ -1,0 +1,34 @@
+<% include header.ejs %>
+
+<script type="text/javascript">
+
+var api = '<%= api %>';
+
+$(document).ready(function () {
+    console.log('dudee');
+    $.ajax({
+        url: api,
+    }).done(function( data ) {
+        console.log('done: '+data.color);
+        $('#api').css('background-color', data.color);
+        $('#message').html('<p>done!</p>');
+    }).error(function(httpObj, textStatus) {
+        var message = '<p>';
+        message += 'Returned: '+httpObj.status+' '+httpObj.statusText;
+        if(httpObj.status == 401) {
+            message += '<br> maybe <a href="/view/login">login</a>?';
+        }
+        message += '</p>';
+        $('#message').html(message);
+    });
+});
+
+</script>
+
+<h1>Content of <br> <%= api %> </h1>
+<div id="api"></div>
+<div id="message"></div>
+
+<a href="/">Home</a>
+
+<% include footer.ejs %>

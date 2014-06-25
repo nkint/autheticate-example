@@ -8,6 +8,7 @@ console.log('test Users:\n', JSON.stringify(Users.testUsers, null, 4));
 module.exports = {
   localStrategy: new localStrategy(
     function(username, password, done) {
+        
         var user = Users.findUserByUsername(username);
         if (!user) {
             done(null, false, { message: 'Incorrect username.' });
