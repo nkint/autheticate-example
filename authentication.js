@@ -1,37 +1,53 @@
+var crypto = require('crypto');
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
 
 var Users = require('./model.js');
 
-console.log('test Users:\n', JSON.stringify(Users.testUsers, null, 4));
+function hashPassword(password, salt) {
+    var hash = crypto.createHash('sha256');
+    hash.update(password);
+    hash.update(salt);
+    return hash.digest('hex');
+}
 
 module.exports = {
-  localStrategy: new localStrategy(
-    function(username, password, done) {
-        
-        var user = Users.findUserByUsername(username);
-        if (!user) {
-            done(null, false, { message: 'Incorrect username.' });
-        } else if (user.password != password) {
-            done(null, false, { message: 'Incorrect password.' });
-        } else {
-            return done(null, user);
-        }
-    }
-  ),
+    localStrategy: new localStrategy(
+        function(username, password, done) {
+            console.log('localStrategy > function.');
+
+            Users.findUserByUsername(username, function(user) {
+
+                var hash = hashPassword(password, user.salt);
+
+                console.log('hash: '+hash);
+
+                if (!user) {
+                    console.log('Incorrect username!');
+                    done(null, false, { message: 'Incorrect username.' });
+                } else if (user.password != hash) {
+                    console.log('Incorrect password!');
+                    done(null, false, { message: 'Incorrect password.' });
+                } else {
+                    console.log('done!');
+                    done(null, user);
+                }
+            });
+        }),
 
   serializeUser: function(user, done) {
     done(null, user.id);
   },
 
   deserializeUser: function(id, done) {
-    var user = Users.findUserById(id);
-
-    if (user) {
-      done(null, user);
-    } else {
-      done(null, false);
-    }
+    console.log('deserializeUser > id:'+id);
+    Users.findUserById(id, function(user) {
+        if (user) {
+          done(null, user);
+        } else {
+          done(null, false);
+        }        
+    });
   },
 
   login: function(req, res, next) {

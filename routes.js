@@ -10,8 +10,7 @@ module.exports = function(app, authentication) {
 
     app.get('/logout', authentication.logout);
 
-    //-------------------------------------------------------------- authentication restriction test
-
+    //-------------------------------------------------------------- restricted API
     // anybody can access this
     app.get('/api/test', function (req, res) {
         res.json({"color":"rgb(175,31,36)"});
@@ -22,7 +21,7 @@ module.exports = function(app, authentication) {
         authentication.ensureAuthenticated,
         authentication.ensureAdmin,
         function (req, res) {
-            res.json({"color":"#0033ff"});
+            res.json({"color":"rgb(0, 106, 173)"});
         }
     );
 
@@ -30,11 +29,11 @@ module.exports = function(app, authentication) {
     app.get('/api/users',
         authentication.ensureAuthenticated, 
         function (req, res) {
-            res.json({"color":"#ff33ff"});
+            res.json({"color":"rgb(242,192,112)"});
         }
     );
 
-    //-------------------------------------------------------------- view
+    //-------------------------------------------------------------- views
 
     app.get('/view/test', function (req, res) {
         res.render('contents.ejs',{"title":"Public page", "api":"/api/test"});
