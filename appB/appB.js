@@ -15,12 +15,13 @@ app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser()); // get information from html forms
 app.use(expressSession({secret: 'secretterces'}));
 
-app.get('/api/test', function (req, res) {
+//------------------------------------------------- call appA public api
+app.get('/public/test', function (req, res) {
     // forward the request
     request(
     { 
         method: 'GET',
-        uri: 'http://localhost:5000/api/test'
+        uri: 'http://localhost:5000/public/test'
     },
     function (error, response, body) {
         console.log('/api/test called appA with status code '+response.statusCode+' response is: '+body);
@@ -28,11 +29,13 @@ app.get('/api/test', function (req, res) {
     });
 });
 
-app.get('/api/login', function (req, res) {
+//------------------------------------------------- call appA session API
+
+app.get('/session/login', function (req, res) {
 
     request.post(
     { 
-        uri: 'http://localhost:5000/login',
+        uri: 'http://localhost:5000/session/login',
         form: { 
             username: 'admin', 
             password: 'pass' 
@@ -44,17 +47,18 @@ app.get('/api/login', function (req, res) {
             console.log(error);
             return;
         }
-        console.log('/api/login called appA with status code '+response.statusCode+' response is: '+body);
+        console.log('/session/login called appA with status code '+response.statusCode+' response is: '+body);
         res.send(JSON.parse(body));
     });
 });
 
-app.get('/api/users', function (req, res) {
+// TODO: does not work
+app.get('/session/users', function (req, res) {
     // forward the request
     request(
     { 
         method: 'GET',
-        uri: 'http://localhost:5000/api/users'
+        uri: 'http://localhost:5000/session/users'
     },
     function (error, response, body) {
         if(response.statusCode==401) {

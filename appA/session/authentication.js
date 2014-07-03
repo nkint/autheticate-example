@@ -2,7 +2,7 @@ var crypto = require('crypto');
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
 
-var Users = require('./model.js');
+var Users = require('../model.js');
 
 function hashPassword(password, salt) {
     var hash = crypto.createHash('sha256');
@@ -15,13 +15,8 @@ module.exports = {
     localStrategy: new localStrategy(
         function(username, password, done) {
             console.log('localStrategy > function.');
-
             Users.findUserByUsername(username, function(user) {
-
                 var hash = hashPassword(password, user.salt);
-
-                console.log('hash: '+hash);
-
                 if (!user) {
                     console.log('Incorrect username!');
                     done(null, false, { message: 'Incorrect username.' });
@@ -51,10 +46,7 @@ module.exports = {
   },
 
   login: function(req, res, next) {
-    console.log('authentication: login');
-    console.log(req.body);
     return passport.authenticate('local', function(err, user) {
-      console.log('dudee > user: '+user);
       if (err) {
         return next(err);
       }

@@ -13,7 +13,7 @@ $(document).ready(function() {
         // TODO: crypt the password
 
         $.ajax({
-            url: '/login',
+            url: '/session/login',
             type: 'post',
             data: values,
             dataType: 'json',
@@ -24,7 +24,7 @@ $(document).ready(function() {
                 message += '</p>';
                 $('#message').html(message);
                 window.setTimeout(function(){
-                    window.location.href = '/';
+                    window.location.href = '/view';
                 }, 2000);
             }, 
             error: function(jqXHR, textStatus, errorThrown) {

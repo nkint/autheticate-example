@@ -1,9 +1,6 @@
 var dblite = require('dblite'),
     db = dblite('./db/users.db');
 
-    var Users = [{id: 1, username: 'user', password: 'pass', role: 'USER'}, 
-         {id: 2, username: 'admin', password: 'pass', role: 'ADMIN'}];
-
 var rowType = {
     id: Number,
     username: String,

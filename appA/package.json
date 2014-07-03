@@ -10,6 +10,7 @@
     "cookie-parser": "latest", 
     "express-session": "latest",
     "passport" : "latest",         
+    "passport-http" : "latest",
     "passport-local" : "latest",    
     "connect-flash" : "latest",     
     "bcrypt-nodejs" : "latest",

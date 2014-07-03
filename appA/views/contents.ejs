@@ -5,7 +5,6 @@
 var api = '<%= api %>';
 
 $(document).ready(function () {
-    console.log('dudee');
     $.ajax({
         url: api,
     }).done(function( data ) {
@@ -29,6 +28,6 @@ $(document).ready(function () {
 <div id="api"></div>
 <div id="message"></div>
 
-<a href="/">Home</a>
+<a href="/view">Home</a>
 
 <% include footer.ejs %>

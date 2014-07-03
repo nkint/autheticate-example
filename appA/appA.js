@@ -7,25 +7,24 @@ var express = require('express'),
     app = express(),
     port = process.env.PORT || 5000;
 
-var routes = require('./routes.js');
-
-// passport things
-var passport = require('passport'),
-    authentication = require('./authentication.js');
-    flash    = require('connect-flash');
-
+// init express things and
 // init ejs render engine
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(express.static(__dirname + '/public'));
 app.engine('html', require('ejs').renderFile);
-
-// init express things
-app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser()); // get information from html forms
-app.use(expressSession({secret: 'secretterces'}));
 
-// init passport
+require('./public/public.js')(app);
+
+//----------------------------------------------------------- passport and sessions
+
+// init passport for session
+var passport = require('passport'),
+    authentication = require('./session/authentication.js');
+    flash    = require('connect-flash');
+
+app.use(cookieParser()); // read cookies (needed for auth)
+app.use(expressSession({secret: 'secretterces'}));
 app.use(passport.initialize());
 app.use(passport.session({ secret: 'secretterces' })); // session secret
 app.use(flash()); // use connect-flash for flash messages stored in session
@@ -33,8 +32,30 @@ passport.use(authentication.localStrategy);
 passport.serializeUser(authentication.serializeUser);
 passport.deserializeUser(authentication.deserializeUser);
 
-// add routes
-require('./routes.js')(app, authentication);
+require('./session/views.js')(app, authentication);
+require('./session/session.js')(app, authentication);
+
+//----------------------------------------------------------- passport and basic auth
+
+var Users = require('./model.js');
+var BasicStrategy   = require('passport-http').BasicStrategy;
+passport.use(new BasicStrategy(
+  function(username, password, done) {
+    Users.findUserByUsername(username, function (user) {
+      if (!user) { return done(null, false); }
+      if (!user.password == password) { return done(null, false); }
+      console.log('ok..');
+      return done(null, user);
+    });
+  }
+));
+
+app.get('/basicauth/me', 
+    passport.authenticate('basic', { session: false }),
+    function(req, res) {
+        res.json(req.user);
+    }
+);
 
 // start
 var server = app.listen(port, function() {
