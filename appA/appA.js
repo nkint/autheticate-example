@@ -1,8 +1,6 @@
 // express application
 var express = require('express'),
     bodyParser = require('body-parser'),
-    cookieParser = require('cookie-parser'),
-    expressSession = require('express-session'),
     http = require('http'),
     app = express(),
     port = process.env.PORT || 5000;
@@ -22,26 +20,11 @@ require('./public/public.js')(app);
 
 //----------------------------------------------------------- passport and basic auth
 
-require('./basicauth/basicauth.js')(app, passport, authentication);
+require('./basicauth/basicauth.js')(app, passport);
 
 //----------------------------------------------------------- passport and sessions
 
-// init passport for session
-
-var authentication = require('./session/authentication.js');
-    flash    = require('connect-flash');
-
-app.use(cookieParser()); // read cookies (needed for auth)
-app.use(expressSession({secret: 'secretterces'}));
-app.use(passport.initialize());
-app.use(passport.session({ secret: 'secretterces' })); // session secret
-app.use(flash()); // use connect-flash for flash messages stored in session
-passport.use(authentication.localStrategy);
-passport.serializeUser(authentication.serializeUser);
-passport.deserializeUser(authentication.deserializeUser);
-
-require('./session/views.js')(app, authentication);
-require('./session/session.js')(app, authentication);
+var authentication = require('./session/authentication.js')(app, passport);
 
 //----------------------------------------------------------- list all API
 var routes = app._router.stack;

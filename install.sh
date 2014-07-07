@@ -18,4 +18,4 @@ cd ../..
 echo "Now test.."
 cd test
 npm install
-./all_tests.sh
+make

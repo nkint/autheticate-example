@@ -19,7 +19,7 @@ function init(app, passport) {
     app.use(passport.initialize());
 }
 
-module.exports = function(app, passport, authentication) {
+module.exports = function(app, passport) {
     init(app, passport);
 
     app.get('/basicauth/test', 
