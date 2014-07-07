@@ -18,7 +18,6 @@ describe('testing basic auth protected API', function() {
         if(err) {
             done(err);
         } else {
-            console.log(res.text);
             expect(res.text).to.be.equal('Unauthorized');
             done();
         }
@@ -80,9 +79,23 @@ describe('testing basic auth protected API', function() {
             });
         },
 
+        function(callback) {
+            command = 'curl -u admin:'+data.passAdmin+' "'+data.appA+'/basicauth/test"';
+            var sys = require('sys')
+            var exec = require('child_process').exec;
+            exec(command, function(error, stdout, stderr) {
+                if(error) {
+                    done(error);
+                } else {
+                    callback(null, stdout);
+                }
+            });
+        }
+
         ], 
         function(e, r) {
             expect(r[0]).to.be.equal(r[1]);
+            expect(r[0]).to.be.equal(r[2]);
             done();
         });
 });
