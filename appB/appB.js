@@ -24,7 +24,26 @@ app.get('/public/test', function (req, res) {
         uri: 'http://localhost:5000/public/test'
     },
     function (error, response, body) {
-        console.log('/api/test called appA with status code '+response.statusCode+' response is: '+body);
+        console.log('/public/test called appA with status code '+response.statusCode+' response is: '+body);
+        res.send(JSON.parse(body));
+    });
+});
+
+//------------------------------------------------- call appA basi auth api
+
+app.get('/basicauth/test', function (req, res) {
+    // forward the request
+    request(
+    { 
+        method: 'GET',
+        uri: 'http://localhost:5000/basicauth/test',
+        auth: {
+            username: 'admin',
+            password: '4ddf3f61c0c2d465dd949cc9fdb4899b02d933d4b2ddb0debb5ec42b9f630999'
+        }
+    },
+    function (error, response, body) {
+        console.log('/basicauth/test called appA with status code '+response.statusCode+' response is: '+body);
         res.send(JSON.parse(body));
     });
 });

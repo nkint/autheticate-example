@@ -1,0 +1,5 @@
+{
+    "appA": "localhost:5000",
+    "appB": "localhost:3000",
+    "passAdmin": "4ddf3f61c0c2d465dd949cc9fdb4899b02d933d4b2ddb0debb5ec42b9f630999"
+}

@@ -14,6 +14,7 @@
     "passport-local" : "latest",    
     "connect-flash" : "latest",     
     "bcrypt-nodejs" : "latest",
-    "request" : "latest" 
+    "request" : "latest",
+    "cli-table": "latest"
   }
 }
