@@ -97,7 +97,8 @@ describe('testing basic auth protected API', function() {
             expect(r[0]).to.be.equal(r[1]);
             expect(r[0]).to.be.equal(r[2]);
             done();
-        });
+        }
+    );
 });
 
 });

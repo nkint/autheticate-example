@@ -29,7 +29,7 @@ app.get('/public/test', function (req, res) {
     });
 });
 
-//------------------------------------------------- call appA basi auth api
+//------------------------------------------------- call appA basic auth api
 
 app.get('/basicauth/test', function (req, res) {
     // forward the request
@@ -57,7 +57,7 @@ app.get('/session/login', function (req, res) {
         uri: 'http://localhost:5000/session/login',
         form: { 
             username: 'admin', 
-            password: 'pass' 
+            password: 'pass'
         }
     },
     

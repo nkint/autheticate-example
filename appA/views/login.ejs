@@ -32,6 +32,9 @@ $(document).ready(function() {
                 message += '<p>';
                 message += 'Something is wrong..<br>';
                 message += jqXHR.status+' : '+JSON.parse(jqXHR.responseText).message;
+                if(jqXHR.status == 401) {
+                    message += '<br> maybe <a href="/view/login">login</a>?';
+                }
                 message += '</p>';
                 $('#message').html(message);
             }

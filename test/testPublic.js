@@ -10,7 +10,7 @@ var api = supertest(data.appB);
 var apiExpected = supertest(data.appA);
 
 describe('testing public API', function() {
-  it('should be the same', function(done) {
+  it(', should be the same', function(done) {
 
     async.parallel([
         function(callback) {

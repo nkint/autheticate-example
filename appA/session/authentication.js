@@ -62,16 +62,16 @@ function login(req, res, next) {
         return next(err);
         }
         if (!user) {
-            return res.send(400, {message: 'Bad username or password'});
+            return res.send(401, {message: 'Bad username or password'});
         }
 
         req.logIn(user, function(err) {
             if (err) {
-              return next(err);
-          }
+                return next(err);
+            }
+            res.json(200, user);
+        });
 
-          res.json(200, user);
-      });
     })(req, res, next);
 };
 
