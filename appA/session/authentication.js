@@ -1,11 +1,12 @@
 //----------------------------------------------------------- declarations and import
 
-var passport = require('passport'),
+var crypto = require('crypto'),
+    passport = require('passport'),
     cookieParser = require('cookie-parser'),
-    crypto = require('crypto'),
     expressSession = require('express-session'),
-    flash = require('connect-flash'),
-    localStrategy = require('passport-local').Strategy;
+    localStrategy = require('passport-local').Strategy,
+    flash = require('connect-flash');
+    
 
 var Users = require('../model.js');
 

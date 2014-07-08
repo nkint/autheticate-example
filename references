@@ -1,0 +1,23 @@
+http://passportjs.org/guide/basic-digest/
+http://danielstudds.com/setting-up-passport-js-secure-spa-part-1/#return-note-204-4
+http://slides.com/jeroenmoors/https-authentication-in-nodejs#/
+https://github.com/jeroenmoors/nodettps/blob/master/https_with_passport_basic.js
+https://github.com/IbuildingsItaly/mean-workshop-tutorial/tree/fe_4_event/app
+
+cookie thing:
+http://en.wikipedia.org/wiki/HTTP_cookie#Cookie_attributes
+http://stackoverflow.com/questions/4579757/how-do-i-create-a-http-client-request-with-a-cookie
+http://stackoverflow.com/questions/18223928/in-nodejs-how-to-send-cookies-in-a-request-to-a-server
+http://stackoverflow.com/questions/23607668/node-js-http-post-request-save-cookie
+https://github.com/defunctzombie/node-cookie
+(express cookie is the right thing!)
+
+https:
+http://book.mixu.net/node/ch10.html
+http://stackoverflow.com/questions/11804168/setting-up-ssl-with-node-js
+http://nategood.com/nodejs-ssl-client-cert-auth-api-rest
+http://blog.nategood.com/client-side-certificate-authentication-in-ngi
+(*) https://github.com/nategood/node-auth/blob/master/server.js
+http://stackoverflow.com/questions/5998694/how-to-create-an-https-server-in-node-js
+http://qugstart.com/blog/node-js/node-js-restify-server-with-both-http-and-https/
+http://www.hacksparrow.com/node-js-https-ssl-certificate.html

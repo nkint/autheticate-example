@@ -72,6 +72,43 @@ describe('testing session protected API', function() {
         });
     });
 
+    it(', expect appB can do the login', function(done) {
+        api
+        .get('/session/login')
+        .expect(200)
+        .end(function(err, res){
+            if(err) {
+                done(err);
+            } else {
+                done();
+            }
+        });
+    });
+
+    it(', expect appB can authenticate after the login', function(done) {
+        api
+        .get('/session/login')
+        .expect(200)
+        .end(function(err, res){
+            if(err) {
+                done(err);
+            } else {
+
+                api
+                .get('/session/users')
+                .expect(200)
+                .end(function(err, res){
+                    if(err) {
+                        done(err);
+                    } else {
+                        expect(res.text).to.be.equal('{"color":"rgb(242,192,112)"}');
+                        done();
+                    }
+                });
+            }
+        });
+    });
+
     it(', do the right things with the cookie saved (curls)', function(done) {   
         async.series(
             [
@@ -113,5 +150,47 @@ describe('testing session protected API', function() {
             }
         );
     });
+
+    // it(', do the right things with the cookie saved (node)', function(done) {   
+    //     async.series(
+    //         [
+    //             function(callback) {
+    //                 command = 'rm -f jarfile';
+    //                 exec(command, function(error, stdout, stderr) {
+    //                     if(error) {
+    //                         done(error);
+    //                     } else {
+    //                         callback(null, stdout);
+    //                     }
+    //                 });
+    //             },
+    //             function(callback) {
+    //                 command = 'curl --cookie-jar jarfile --data "username=admin&password=pass" '+data.appA+'/session/login';
+    //                 exec(command, function(error, stdout, stderr) {
+    //                     if(error) {
+    //                         done(error);
+    //                     } else {
+    //                         callback(null, stdout);
+    //                     }
+    //                 });
+    //             }, 
+    //             function(callback) {
+    //                 command = 'curl --cookie jarfile "'+data.appA+'/session/admin"';
+    //                 exec(command, function(error, stdout, stderr) {
+    //                     if(error) {
+    //                         done(error);
+    //                     } else {
+    //                         callback(null, stdout);
+    //                     }
+    //                 });
+    //             }
+
+    //         ], 
+    //         function(e, r) {
+    //             expect(r[2]).to.be.equal('{"color":"rgb(0, 106, 173)"}');
+    //             done();
+    //         }
+    //     );
+    // });
 
 });

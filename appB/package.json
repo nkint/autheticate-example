@@ -3,13 +3,7 @@
   "version": "0.0.1",
   "main": "appB.js",
   "dependencies" : {
-    "express" : "4.1",           
-    "body-parser": "1.2.0", 
-    "cookie-parser": "latest", 
-    "express-session": "latest",
-    "passport" : "latest",         
-    "passport-local" : "latest",    
-    "connect-flash" : "latest",     
+    "express" : "4.1",
     "bcrypt-nodejs" : "latest",
     "request" : "latest"
   }

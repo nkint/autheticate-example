@@ -1,27 +1,22 @@
 // express application
-var express = require('express'),
-    bodyParser = require('body-parser'),
-    cookieParser = require('cookie-parser'),
-    expressSession = require('express-session'),
-    http = require('http'),
+var http = require('http'),
     request = require('request'),
+    express = require('express'),
     app = express(),
     port = process.env.PORT || 3000;
 
-var http = require('http');
-
-// init express things
-app.use(cookieParser()); // read cookies (needed for auth)
-app.use(bodyParser()); // get information from html forms
-app.use(expressSession({secret: 'secretterces'}));
+var appA = 'http://localhost:5000';
 
 //------------------------------------------------- call appA public api
+//------------------------------------------------- call appA public api
+//------------------------------------------------- call appA public api
+
 app.get('/public/test', function (req, res) {
     // forward the request
     request(
     { 
         method: 'GET',
-        uri: 'http://localhost:5000/public/test'
+        uri: appA+'/public/test'
     },
     function (error, response, body) {
         console.log('/public/test called appA with status code '+response.statusCode+' response is: '+body);
@@ -30,13 +25,15 @@ app.get('/public/test', function (req, res) {
 });
 
 //------------------------------------------------- call appA basic auth api
+//------------------------------------------------- call appA basic auth api
+//------------------------------------------------- call appA basic auth api
 
 app.get('/basicauth/test', function (req, res) {
     // forward the request
     request(
     { 
         method: 'GET',
-        uri: 'http://localhost:5000/basicauth/test',
+        uri: appA+'/basicauth/test',
         auth: {
             username: 'admin',
             password: '4ddf3f61c0c2d465dd949cc9fdb4899b02d933d4b2ddb0debb5ec42b9f630999'
@@ -49,16 +46,24 @@ app.get('/basicauth/test', function (req, res) {
 });
 
 //------------------------------------------------- call appA session API
+//------------------------------------------------- call appA session API
+//------------------------------------------------- call appA session API
+
+var j = request.jar() ;
+var savedCookie = 
 
 app.get('/session/login', function (req, res) {
 
+    var uri = appA+'/session/login';
+
     request.post(
     { 
-        uri: 'http://localhost:5000/session/login',
+        uri: uri,
         form: { 
             username: 'admin', 
             password: 'pass'
-        }
+        },
+        jar:j
     },
     
     function (error, response, body) {
@@ -66,18 +71,20 @@ app.get('/session/login', function (req, res) {
             console.log(error);
             return;
         }
+        savedCookie = j.getCookies(uri);
         console.log('/session/login called appA with status code '+response.statusCode+' response is: '+body);
+        console.log('saved session cookie: ', savedCookie);
         res.send(JSON.parse(body));
     });
 });
 
-// TODO: does not work
 app.get('/session/users', function (req, res) {
-    // forward the request
+
     request(
     { 
         method: 'GET',
-        uri: 'http://localhost:5000/session/users'
+        uri: 'http://localhost:5000/session/users',
+        jar: j
     },
     function (error, response, body) {
         if(response.statusCode==401) {
@@ -90,6 +97,10 @@ app.get('/session/users', function (req, res) {
     });
 
 });
+
+//------------------------------------------------- start
+//------------------------------------------------- start
+//------------------------------------------------- start
 
 // start
 var server = app.listen(port, function() {
