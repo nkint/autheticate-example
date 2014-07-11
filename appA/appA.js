@@ -29,12 +29,12 @@ var authentication = require('./session/authentication.js')(app, passport);
 //----------------------------------------------------------- list all API
 var routes = app._router.stack;
 var Table = require('cli-table');
-var table = new Table({ head: ["Name"] });
+var table = new Table({ head: ["Type", "Name"] });
 for (var key in routes) {
     if (routes.hasOwnProperty(key)) {
         var val = routes[key];
         if(val.route) {
-            var _o = [val.route.path];
+            var _o = [val.route.stack[0].method, val.route.path];
             table.push(_o);
         }
     }
